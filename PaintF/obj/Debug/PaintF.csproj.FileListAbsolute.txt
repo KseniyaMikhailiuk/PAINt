@@ -1,0 +1,10 @@
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\PaintF.exe.config
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\PaintF.exe
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\PaintF.pdb
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.csprojResolveAssemblyReference.cache
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.Properties.Resources.resources
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.csproj.GenerateResource.Cache
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.csproj.CoreCompileInputs.cache
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.exe
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.pdb
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.Paint.resources
