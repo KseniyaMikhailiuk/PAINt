@@ -16,5 +16,6 @@ namespace PaintF
             new Rhombus(),
             new Rectangle()
         };
+
     }
 }
