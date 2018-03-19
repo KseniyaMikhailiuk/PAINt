@@ -14,17 +14,17 @@ namespace PaintF
 
         public int getFinishPointX()
         {
-            return Math.Abs(Y.X - X.X);
+            return Math.Abs(FinishPoint.X - StartPoint.X);
         }
 
         public int getFinishPointY()
         {
-            return Math.Abs(Y.Y - X.Y);
+            return Math.Abs(FinishPoint.Y - StartPoint.Y);
         }
 
         public override void Draw(object sender, PaintEventArgs e, Pen pen)
         {
-            e.Graphics.DrawRectangle(pen, X.X, X.Y, getFinishPointX(), getFinishPointY());
+            e.Graphics.DrawRectangle(pen, StartPoint.X, StartPoint.Y, getFinishPointX(), getFinishPointY());
         }
     }
 }

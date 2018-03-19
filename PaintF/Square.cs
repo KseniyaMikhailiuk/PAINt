@@ -13,7 +13,7 @@ namespace PaintF
 
         public override void Draw(object sender, PaintEventArgs e, Pen pen)
         {
-            e.Graphics.DrawRectangle(pen, X.X, X.Y, getFinishPointX(), getFinishPointX());
+            e.Graphics.DrawRectangle(pen, StartPoint.X, StartPoint.Y, getFinishPointX(), getFinishPointX());
         }
     }
 }

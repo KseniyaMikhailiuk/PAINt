@@ -13,7 +13,7 @@ namespace PaintF
 
         public override void Draw(object sender, PaintEventArgs e, Pen pen)
         {
-            e.Graphics.DrawEllipse(pen, X.X, X.Y, getFinishPointX(), getFinishPointX());
+            e.Graphics.DrawEllipse(pen, StartPoint.X, StartPoint.Y, getFinishPointX(), getFinishPointX());
         }
     }
 }

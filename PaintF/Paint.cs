@@ -10,7 +10,7 @@ namespace PaintF
         FigureList figureList = new FigureList();
 
         Figure figure;
-        Pen pen = new Pen(Color.Black, 20);
+        Pen pen = new Pen(Color.Black, 5);
 
         public bool isClicked = false;
 
@@ -49,8 +49,8 @@ namespace PaintF
             if (figure != null)
             {
                 
-                figure.X = X;
-                figure.Y = Y;
+                figure.StartPoint = X;
+                figure.FinishPoint = Y;
 
                 isFirstFigurePainted = true;
                 figure.Draw(sender, e, pen);
@@ -65,12 +65,6 @@ namespace PaintF
             }
         }
 
-        private void lineToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            isFirstFigurePainted = false;
-            figure = new Line();
-        }
-
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (isClicked)
@@ -78,6 +72,13 @@ namespace PaintF
                 Y = new Point(e.X, e.Y);
                 pictureBox1.Invalidate();
             }
+        }
+
+
+        private void lineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isFirstFigurePainted = false;
+            figure = new Line();
         }
 
         private void rectangleToolStripMenuItem_Click(object sender, EventArgs e)

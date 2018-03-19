@@ -9,9 +9,10 @@ namespace PaintF
         {
             return new Line();
         }
+
         public override void Draw(object sender, PaintEventArgs e, Pen pen)
         {
-            e.Graphics.DrawLine(pen, X, Y);
+            e.Graphics.DrawLine(pen, StartPoint, FinishPoint);
         }
     }
 }

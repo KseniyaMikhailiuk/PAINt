@@ -3,12 +3,11 @@ using System.Windows.Forms;
 
 namespace PaintF
 {
-    public class Figure
+    public abstract class Figure
     {
-
-        public Point X { get; set; }
-        public Point Y { get; set; }
-        public virtual Figure Create() { return new Figure(); }
-        public virtual void Draw(object sender, PaintEventArgs e, Pen pen) {}
+        public Point StartPoint { get; set; }
+        public Point FinishPoint { get; set; }
+        public abstract Figure Create();
+        public abstract void Draw(object sender, PaintEventArgs e, Pen pen);
     }
 }

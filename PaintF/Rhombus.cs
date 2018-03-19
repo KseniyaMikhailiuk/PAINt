@@ -12,7 +12,7 @@ namespace PaintF
         }
         public override void Draw(object sender, PaintEventArgs e, Pen pen)
         {
-            Point[] point = { X, Y, new Point (X.X, Y.Y + (Y.Y - X.Y)), new Point (X.X - (Y.X - X.X), Y.Y)};
+            Point[] point = { StartPoint, FinishPoint, new Point (StartPoint.X, FinishPoint.Y + (FinishPoint.Y - StartPoint.Y)), new Point (StartPoint.X - (FinishPoint.X - StartPoint.X), FinishPoint.Y)};
             e.Graphics.DrawPolygon(pen, point);
         }
     }
