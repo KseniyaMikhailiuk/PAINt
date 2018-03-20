@@ -19,6 +19,11 @@ namespace PaintF
 
         public bool isClicked = false;
 
+        public struct MenuItemInfo
+        {
+            public string figureName;
+            public string creatorType;
+        }
 
         Point X;
         Point Y;
@@ -26,40 +31,32 @@ namespace PaintF
         public Paint()
         {
             InitializeComponent();
-            var menuItem = new ToolStripMenuItem("Line");
-            menuItem.Tag = (typeof(LineCreator)).ToString();
-            menuItem.Click += new EventHandler(MenuItemClickHandler);
-            figuresToolStripMenuItem.DropDownItems.Add(menuItem);
 
-            menuItem = new ToolStripMenuItem("Rectangle");
-            menuItem.Tag = (typeof(RectangleCreator)).ToString();
-            menuItem.Click += new EventHandler(MenuItemClickHandler);
-            figuresToolStripMenuItem.DropDownItems.Add(menuItem);
+            MenuItemInfo[] itemsArray = new MenuItemInfo[] {
+                new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString() },
+                new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString()},
+                new MenuItemInfo { figureName = "Square", creatorType = (typeof(SquareCreator)).ToString()},
+                new MenuItemInfo { figureName = "Rhombus", creatorType = (typeof(RhombusCreator)).ToString()},
+                new MenuItemInfo { figureName = "Circle", creatorType = (typeof(CircleCreator)).ToString()},
+                new MenuItemInfo { figureName = "Ellipce", creatorType = (typeof(EllipseCreator)).ToString()}
+            };
 
-            menuItem = new ToolStripMenuItem("Square");
-            menuItem.Tag = (typeof(SquareCreator)).ToString();
-            menuItem.Click += new EventHandler(MenuItemClickHandler);
-            figuresToolStripMenuItem.DropDownItems.Add(menuItem);
+            ToolStripMenuItem menuItem;
 
-            menuItem = new ToolStripMenuItem("Rhombus");
-            menuItem.Tag = (typeof(RhombusCreator)).ToString();
-            menuItem.Click += new EventHandler(MenuItemClickHandler);
-            figuresToolStripMenuItem.DropDownItems.Add(menuItem);
+            for (int i = 0; i < itemsArray.Length; i++)
+            {
+                menuItem = new ToolStripMenuItem(itemsArray[i].figureName);
+                menuItem.Tag = itemsArray[i].creatorType;
+                menuItem.Click += new EventHandler(MenuItemClickHandler);
+                figuresToolStripMenuItem.DropDownItems.Add(menuItem);
+            }
 
-            menuItem = new ToolStripMenuItem("Circle");
-            menuItem.Tag = (typeof(CircleCreator)).ToString();
-            menuItem.Click += new EventHandler(MenuItemClickHandler);
-            figuresToolStripMenuItem.DropDownItems.Add(menuItem);
-
-            menuItem = new ToolStripMenuItem("Ellipce");
-            menuItem.Tag = (typeof(EllipseCreator)).ToString();
-            menuItem.Click += new EventHandler(MenuItemClickHandler);
-            figuresToolStripMenuItem.DropDownItems.Add(menuItem);
         }
 
         private void MenuItemClickHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+
             foreach (var creator in figureCreatorList.Creators)
             {
                 if ((string)clickedItem.Tag == creator.ToString())
@@ -99,7 +96,6 @@ namespace PaintF
                     {
                         fig.Draw(sender, e, pen);
                     }
-    
                 }
             }
         }
@@ -113,5 +109,35 @@ namespace PaintF
             }
         }
 
+        private void paintAllFiguresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           // PaintAll();
+        }
+
+        /*private void PaintAll()
+        {
+            int startX = 20;
+            int startY = 20;
+            int finishX = 100;
+            int finishY = startY + 60;
+
+            foreach (var creator in figureCreatorList.Creators)
+            {
+                figureCreator = creator;
+                figure = figureCreator.Create();
+                figure.StartPoint = new Point(startX, startY);
+                figure.FinishPoint = new Point(finishX, finishY);
+                figure.Draw(pictureBox1, e, pen);
+                startY += 100;
+                finishY = startY + 60;
+                if (figureList.Figures.Count > 0)
+                {
+                    foreach (var fig in figureList.Figures)
+                    {
+                        fig.Draw(sender, e, pen);
+                    }
+                }
+            }
+        }*/
     }
 }

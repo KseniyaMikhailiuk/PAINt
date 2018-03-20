@@ -6,11 +6,6 @@ namespace PaintF
 {
     class Circle: Ellipse
     {
-        public override Figure Create()
-        {
-            return new Circle();
-        }
-
         public override void Draw(object sender, PaintEventArgs e, Pen pen)
         {
             e.Graphics.DrawEllipse(pen, StartPoint.X, StartPoint.Y, getFinishPointX(), getFinishPointX());

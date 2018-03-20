@@ -7,11 +7,6 @@ namespace PaintF
 {
     class Rectangle : Figure
     {
-        public override Figure Create()
-        {
-            return new Rectangle();
-        }
-
         public int getFinishPointX()
         {
             return Math.Abs(FinishPoint.X - StartPoint.X);
