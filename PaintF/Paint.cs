@@ -32,6 +32,7 @@ namespace PaintF
         {
             InitializeComponent();
 
+
             MenuItemInfo[] itemsArray = new MenuItemInfo[] {
                 new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString() },
                 new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString()},
@@ -89,12 +90,12 @@ namespace PaintF
                 figure.StartPoint = X;
                 figure.FinishPoint = Y;
 
-                figure.Draw(sender, e, pen);
+                figure.Draw(e.Graphics, pen, figure.StartPoint, figure.FinishPoint);
                 if (figureList.Figures.Count > 0)
                 {
                     foreach (var fig in figureList.Figures)
                     {
-                        fig.Draw(sender, e, pen);
+                        fig.Draw(e.Graphics, pen, fig.StartPoint, fig.FinishPoint);
                     }
                 }
             }
@@ -111,14 +112,10 @@ namespace PaintF
 
         private void paintAllFiguresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           // PaintAll();
-        }
-
-        /*private void PaintAll()
-        {
-            int startX = 20;
+            Graphics g = pictureBox1.CreateGraphics();
+            int startX = 80;
             int startY = 20;
-            int finishX = 100;
+            int finishX = 160;
             int finishY = startY + 60;
 
             foreach (var creator in figureCreatorList.Creators)
@@ -127,17 +124,22 @@ namespace PaintF
                 figure = figureCreator.Create();
                 figure.StartPoint = new Point(startX, startY);
                 figure.FinishPoint = new Point(finishX, finishY);
-                figure.Draw(pictureBox1, e, pen);
+                figure.Draw(g, pen, figure.StartPoint, figure.FinishPoint);
+                if (figure != null)
+                {
+                    figureList.Figures.Add(figure);
+                }
                 startY += 100;
-                finishY = startY + 60;
+                finishY = startY + 50;
                 if (figureList.Figures.Count > 0)
                 {
                     foreach (var fig in figureList.Figures)
                     {
-                        fig.Draw(sender, e, pen);
+                        fig.Draw(g, pen, fig.StartPoint, fig.FinishPoint);
                     }
                 }
             }
-        }*/
+        }
+
     }
 }

@@ -5,9 +5,9 @@ namespace PaintF
 {
     public class Line: Figure
     {
-        public override void Draw(object sender, PaintEventArgs e, Pen pen)
+        public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {
-            e.Graphics.DrawLine(pen, StartPoint, FinishPoint);
+            g.DrawLine(pen, StartPoint, FinishPoint);
         }
     }
 }

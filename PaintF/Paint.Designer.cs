@@ -44,28 +44,29 @@
             this.paintAllFiguresToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1837, 42);
+            this.menuStrip1.Size = new System.Drawing.Size(2970, 40);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // figuresToolStripMenuItem
             // 
             this.figuresToolStripMenuItem.Name = "figuresToolStripMenuItem";
-            this.figuresToolStripMenuItem.Size = new System.Drawing.Size(104, 38);
+            this.figuresToolStripMenuItem.Size = new System.Drawing.Size(104, 36);
             this.figuresToolStripMenuItem.Text = "Figures";
             // 
             // paintAllFiguresToolStripMenuItem
             // 
             this.paintAllFiguresToolStripMenuItem.Name = "paintAllFiguresToolStripMenuItem";
-            this.paintAllFiguresToolStripMenuItem.Size = new System.Drawing.Size(190, 38);
+            this.paintAllFiguresToolStripMenuItem.Size = new System.Drawing.Size(190, 36);
             this.paintAllFiguresToolStripMenuItem.Text = "Paint all figures";
+            this.paintAllFiguresToolStripMenuItem.Click += new System.EventHandler(this.paintAllFiguresToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Location = new System.Drawing.Point(6, 63);
+            this.pictureBox1.Location = new System.Drawing.Point(6, 66);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1822, 939);
+            this.pictureBox1.Size = new System.Drawing.Size(2406, 1108);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox1_Paint);
@@ -77,8 +78,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(1837, 1014);
+            this.ClientSize = new System.Drawing.Size(2970, 1755);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;

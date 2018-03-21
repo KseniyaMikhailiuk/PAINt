@@ -1,14 +1,15 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
-using System;
 
 namespace PaintF
 {
-    class Ellipse: Rectangle
+    class Ellipse: Figure
     {
-        public override void Draw(object sender, PaintEventArgs e, Pen pen)
+        public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {
-            e.Graphics.DrawEllipse(pen, StartPoint.X, StartPoint.Y, getFinishPointX(), getFinishPointY());
+            int Height = FinishPoint.Y - StartPoint.Y;
+            int Width = FinishPoint.X - StartPoint.X;
+            g.DrawEllipse(pen, StartPoint.X, StartPoint.Y, Width, Height);
         }
     }
 }

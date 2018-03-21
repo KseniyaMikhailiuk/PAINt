@@ -7,6 +7,6 @@ namespace PaintF
     {
         public Point StartPoint { get; set; }
         public Point FinishPoint { get; set; }
-        public abstract void Draw(object sender, PaintEventArgs e, Pen pen);
+        public abstract void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint);
     }
 }
