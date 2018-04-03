@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 
 namespace PaintF
@@ -15,7 +16,10 @@ namespace PaintF
 
         Figure figure;
 
-        Pen pen = new Pen(Color.Black, 3);
+        Color penColor = Color.Black;
+        int penWidth = 1;
+
+        Pen pen = new Pen(Color.Black, 1);
 
         public bool isClicked = false;
 
@@ -23,6 +27,7 @@ namespace PaintF
         {
             public string figureName;
             public string creatorType;
+            public FigureCreator FigureCreator;
         }
 
         Point X;
@@ -32,46 +37,84 @@ namespace PaintF
         {
             InitializeComponent();
 
+            Color[] colorArray = new Color[] { Color.Black, Color.Blue, Color.Orange, Color.Green,
+                                               Color.Gold, Color.Indigo, Color.HotPink, Color.LimeGreen, Color.Red };
+
+            int[] widthArray = new int[] { 1, 2, 3, 4, 5 };
 
             MenuItemInfo[] itemsArray = new MenuItemInfo[] {
-                new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString() },
-                new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString()},
-                new MenuItemInfo { figureName = "Square", creatorType = (typeof(SquareCreator)).ToString()},
-                new MenuItemInfo { figureName = "Rhombus", creatorType = (typeof(RhombusCreator)).ToString()},
-                new MenuItemInfo { figureName = "Circle", creatorType = (typeof(CircleCreator)).ToString()},
-                new MenuItemInfo { figureName = "Ellipce", creatorType = (typeof(EllipseCreator)).ToString()}
+                new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString(), FigureCreator = new LineCreator() },
+                new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString(), FigureCreator = new RectangleCreator()},
+                new MenuItemInfo { figureName = "Square", creatorType = (typeof(SquareCreator)).ToString(), FigureCreator = new SquareCreator()},
+                new MenuItemInfo { figureName = "Rhombus", creatorType = (typeof(RhombusCreator)).ToString(), FigureCreator = new RhombusCreator()},
+                new MenuItemInfo { figureName = "Circle", creatorType = (typeof(CircleCreator)).ToString(), FigureCreator = new CircleCreator()},
+                new MenuItemInfo { figureName = "Ellipce", creatorType = (typeof(EllipseCreator)).ToString(), FigureCreator = new EllipseCreator()}
             };
 
             ToolStripMenuItem menuItem;
 
-            for (int i = 0; i < itemsArray.Length; i++)
+            foreach (MenuItemInfo items in itemsArray)
             {
-                menuItem = new ToolStripMenuItem(itemsArray[i].figureName);
-                menuItem.Tag = itemsArray[i].creatorType;
-                menuItem.Click += new EventHandler(MenuItemClickHandler);
+                menuItem = new ToolStripMenuItem(items.figureName)
+                {
+                    Tag = items.FigureCreator
+                };
+                menuItem.Click += new EventHandler(MenuItemFigureClickHandler);
                 figuresToolStripMenuItem.DropDownItems.Add(menuItem);
             }
 
+            foreach (Color color in colorArray)
+            {
+                menuItem = new ToolStripMenuItem()
+                {
+                    BackColor = color
+                };
+                menuItem.Click += new EventHandler(MenuItemColorClickHandler);
+                colorToolStripMenuItem.DropDownItems.Add(menuItem);
+            }
+
+            foreach (int width in widthArray)
+            {
+                menuItem = new ToolStripMenuItem()
+                {
+                    Tag = width,
+                    Text = Convert.ToString(width)
+                };
+                menuItem.Click += new EventHandler(MenuItemWidthClickHandler);
+                widthToolStripMenuItem.DropDownItems.Add(menuItem);
+            }
         }
 
-        private void MenuItemClickHandler(object sender, EventArgs e)
+        private void MenuItemFigureClickHandler(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 
-            foreach (var creator in figureCreatorList.Creators)
-            {
-                if ((string)clickedItem.Tag == creator.ToString())
-                {
-                    figureCreator = creator;
-                }
-            }
+            figureCreator = (FigureCreator)clickedItem.Tag;
+        }
+
+        private void MenuItemColorClickHandler(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            penColor = clickedItem.BackColor;
+            pen = new Pen(penColor, penWidth);
+        }
+
+        private void MenuItemWidthClickHandler(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            penWidth = (int)clickedItem.Tag;
+            pen = new Pen(penColor, penWidth);
         }
 
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            figure = figureCreator.Create();
-            isClicked = true;
-            X = new Point(e.X, e.Y);
+            if (figureCreator != null)
+            {
+                figure = figureCreator.Create();
+                figure.Pen = pen;
+                isClicked = true;
+                X = new Point(e.X, e.Y);
+            }
         }
 
         private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -89,13 +132,12 @@ namespace PaintF
             {
                 figure.StartPoint = X;
                 figure.FinishPoint = Y;
-
-                figure.Draw(e.Graphics, pen, figure.StartPoint, figure.FinishPoint);
+                figure.Draw(e.Graphics, figure.Pen, figure.StartPoint, figure.FinishPoint);
                 if (figureList.Figures.Count > 0)
                 {
                     foreach (var fig in figureList.Figures)
                     {
-                        fig.Draw(e.Graphics, pen, fig.StartPoint, fig.FinishPoint);
+                        fig.Draw(e.Graphics, fig.Pen, fig.StartPoint, fig.FinishPoint);
                     }
                 }
             }
@@ -113,6 +155,7 @@ namespace PaintF
         private void paintAllFiguresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Graphics g = pictureBox1.CreateGraphics();
+            Figure allFigurePainter;
             int startX = 80;
             int startY = 20;
             int finishX = 160;
@@ -120,14 +163,14 @@ namespace PaintF
 
             foreach (var creator in figureCreatorList.Creators)
             {
-                figureCreator = creator;
-                figure = figureCreator.Create();
-                figure.StartPoint = new Point(startX, startY);
-                figure.FinishPoint = new Point(finishX, finishY);
-                figure.Draw(g, pen, figure.StartPoint, figure.FinishPoint);
-                if (figure != null)
+                allFigurePainter = creator.Create();
+                allFigurePainter.StartPoint = new Point(startX, startY);
+                allFigurePainter.FinishPoint = new Point(finishX, finishY);
+                allFigurePainter.Pen = pen;
+                allFigurePainter.Draw(g, allFigurePainter.Pen, allFigurePainter.StartPoint, allFigurePainter.FinishPoint);
+                if (allFigurePainter != null)
                 {
-                    figureList.Figures.Add(figure);
+                    figureList.Figures.Add(allFigurePainter);
                 }
                 startY += 100;
                 finishY = startY + 50;
@@ -135,11 +178,10 @@ namespace PaintF
                 {
                     foreach (var fig in figureList.Figures)
                     {
-                        fig.Draw(g, pen, fig.StartPoint, fig.FinishPoint);
+                        fig.Draw(g, fig.Pen, fig.StartPoint, fig.FinishPoint);
                     }
                 }
             }
         }
-
     }
 }
