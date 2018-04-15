@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+﻿using System.Runtime.Serialization;
 using System.Drawing;
 
 namespace PaintF

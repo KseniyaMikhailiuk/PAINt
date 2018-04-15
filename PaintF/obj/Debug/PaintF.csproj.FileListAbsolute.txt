@@ -8,3 +8,7 @@ C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.csproj.Cor
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.exe
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.pdb
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\obj\Debug\PaintF.Paint.resources
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.Bson.dll
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.dll
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.xml
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.Bson.xml

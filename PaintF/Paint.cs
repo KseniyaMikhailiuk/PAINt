@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
-
 
 namespace PaintF
 {
@@ -32,7 +30,7 @@ namespace PaintF
 
         Point X;
         Point Y;
-        
+
         public Paint()
         {
             InitializeComponent();
@@ -126,6 +124,18 @@ namespace PaintF
             }
         }
 
+
+        public void RepaintFigureList(Graphics g)
+        {
+            if (figureList.Figures.Count > 0)
+            {
+                foreach (var fig in figureList.Figures)
+                {
+                    fig.Draw(g, fig.Pen, fig.StartPoint, fig.FinishPoint);
+                }
+            }
+        }
+
         public void PictureBox1_Paint(object sender, PaintEventArgs e)
         {
             if (figure != null)
@@ -133,13 +143,7 @@ namespace PaintF
                 figure.StartPoint = X;
                 figure.FinishPoint = Y;
                 figure.Draw(e.Graphics, figure.Pen, figure.StartPoint, figure.FinishPoint);
-                if (figureList.Figures.Count > 0)
-                {
-                    foreach (var fig in figureList.Figures)
-                    {
-                        fig.Draw(e.Graphics, fig.Pen, fig.StartPoint, fig.FinishPoint);
-                    }
-                }
+                RepaintFigureList(e.Graphics);
             }
         }
 
@@ -174,14 +178,47 @@ namespace PaintF
                 }
                 startY += 100;
                 finishY = startY + 50;
-                if (figureList.Figures.Count > 0)
-                {
-                    foreach (var fig in figureList.Figures)
-                    {
-                        fig.Draw(g, fig.Pen, fig.StartPoint, fig.FinishPoint);
-                    }
-                }
+                RepaintFigureList(g);
             }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var serializer = new Serializer(); 
+            if (figureList.Figures.Count != 0)
+            {
+                serializer.Serialize(figureList.Figures);
+            }
+            else
+            {
+                string message = "Нарисуйте что-нибудь, тогда сохраним))";
+                string caption = "Save";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                MessageBox.Show(message, caption, buttons);
+            }
+            
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearSurface();
+            var deserializer = new Serializer();
+            figureList.Figures = deserializer.Deserialize();
+            Graphics g = pictureBox1.CreateGraphics();
+            RepaintFigureList(g);
+        }
+
+        public void ClearSurface()
+        {
+            Graphics g = pictureBox1.CreateGraphics();
+            g.Clear(Color.White);
+            figureList.Figures.Clear();
+        }
+
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearSurface();
         }
     }
 }
