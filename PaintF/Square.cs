@@ -29,5 +29,24 @@ namespace PaintF
             }
             g.DrawRectangle(pen, StartPoint.X, StartPoint.Y, Width, Width);
         }
+
+        public override bool IsPointIn(Point point)
+        {
+            int Width = FinishPoint.X - StartPoint.X;
+            if (((point.X >= StartPoint.X) && (point.X <= StartPoint.X + Width))
+                && ((point.Y <= StartPoint.Y + Width) && (point.Y >= StartPoint.Y)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override object Clone()
+        {
+            return (Square)MemberwiseClone();
+        }
     }
 }

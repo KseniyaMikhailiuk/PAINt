@@ -18,8 +18,10 @@ namespace PaintF
         int penWidth = 1;
 
         Pen pen = new Pen(Color.Black, 1);
+        Highlighter Highlighter = new Highlighter() { IsHighlighted = false};
 
         public bool isClicked = false;
+        public bool isHighlighterOn = false;
 
         public struct MenuItemInfo
         {
@@ -28,8 +30,8 @@ namespace PaintF
             public FigureCreator FigureCreator;
         }
 
-        Point X;
-        Point Y;
+        Point StartPoint;
+        Point FinishPoint;
 
         public Paint()
         {
@@ -38,7 +40,9 @@ namespace PaintF
             Color[] colorArray = new Color[] { Color.Black, Color.Blue, Color.Orange, Color.Green,
                                                Color.Gold, Color.Indigo, Color.HotPink, Color.LimeGreen, Color.Red };
 
-            int[] widthArray = new int[] { 1, 2, 3, 4, 5 };
+            MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandker)), new MenuItem("Copy"),
+                                                        new MenuItem("Paste")};
+            ContextMenu = new ContextMenu(menuItems);
 
             MenuItemInfo[] itemsArray = new MenuItemInfo[] {
                 new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString(), FigureCreator = new LineCreator() },
@@ -70,21 +74,27 @@ namespace PaintF
                 menuItem.Click += new EventHandler(MenuItemColorClickHandler);
                 colorToolStripMenuItem.DropDownItems.Add(menuItem);
             }
+        }
 
-            foreach (int width in widthArray)
+        private void ContextMenuDeleteClickHandker(object sender, EventArgs e)
+        {
+            if ((Highlighter.SelectedFigure != null) && (isHighlighterOn))
             {
-                menuItem = new ToolStripMenuItem()
-                {
-                    Tag = width,
-                    Text = Convert.ToString(width)
-                };
-                menuItem.Click += new EventHandler(MenuItemWidthClickHandler);
-                widthToolStripMenuItem.DropDownItems.Add(menuItem);
+                figureList.Figures.Remove(Highlighter.SelectedFigure);
+                Graphics g = pictureBox1.CreateGraphics();
+                g.Clear(pictureBox1.BackColor);
+                RepaintFigureList(g);
             }
         }
 
         private void MenuItemFigureClickHandler(object sender, EventArgs e)
         {
+            if (isHighlighterOn)
+            {
+                isHighlighterOn = false;
+                Highlighter.IsHighlighted = false;
+            }
+
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 
             figureCreator = (FigureCreator)clickedItem.Tag;
@@ -97,30 +107,35 @@ namespace PaintF
             pen = new Pen(penColor, penWidth);
         }
 
-        private void MenuItemWidthClickHandler(object sender, EventArgs e)
-        {
-            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            penWidth = (int)clickedItem.Tag;
-            pen = new Pen(penColor, penWidth);
-        }
-
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (figureCreator != null)
+            if (isHighlighterOn)
             {
-                figure = figureCreator.Create();
-                figure.Pen = pen;
-                isClicked = true;
-                X = new Point(e.X, e.Y);
+                Graphics g = pictureBox1.CreateGraphics();
+                RepaintFigureList(g);
+                Highlighter.Start(new Point(e.X, e.Y), figureList.Figures, pictureBox1, Highlighter.IsHighlighted);
+            }
+            else
+            {
+                if (figureCreator != null)
+                {
+                    figure = figureCreator.Create();
+                    figure.Pen = pen;
+                    isClicked = true;
+                    StartPoint = new Point(e.X, e.Y);
+                }
             }
         }
 
         private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
-            isClicked = false;
-            if (figure != null)
+            if (isClicked)
             {
-                figureList.Figures.Add(figure);
+                isClicked = false;
+                if (figure != null)
+                {
+                    figureList.Figures.Add(figure);
+                }
             }
         }
 
@@ -140,8 +155,8 @@ namespace PaintF
         {
             if (figure != null)
             {
-                figure.StartPoint = X;
-                figure.FinishPoint = Y;
+                figure.StartPoint = StartPoint;
+                figure.FinishPoint = FinishPoint;
                 figure.Draw(e.Graphics, figure.Pen, figure.StartPoint, figure.FinishPoint);
                 RepaintFigureList(e.Graphics);
             }
@@ -149,9 +164,14 @@ namespace PaintF
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+            if (isHighlighterOn)
+            {
+                Cursor = Cursors.Hand;
+            }
+
             if (isClicked)
             {
-                Y = new Point(e.X, e.Y);
+                FinishPoint = new Point(e.X, e.Y);
                 pictureBox1.Invalidate();
             }
         }
@@ -196,7 +216,6 @@ namespace PaintF
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 MessageBox.Show(message, caption, buttons);
             }
-            
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -219,6 +238,26 @@ namespace PaintF
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearSurface();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            ScrollBar scrollBar = (ScrollBar)sender;
+            penWidth = scrollBar.Value;
+            pen = new Pen(penColor, penWidth);
+        }
+
+        private void highlightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isHighlighterOn = true;
+        }
+
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenu.Show((Control)sender, new Point(e.X, e.Y));
+            }
         }
     }
 }

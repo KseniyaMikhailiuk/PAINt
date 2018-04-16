@@ -1,23 +1,60 @@
 ﻿using System.Drawing;
-using System.Runtime.Serialization;
+using System;
 
 
 
 namespace PaintF
 {
-    class Circle: Ellipse
+    class Circle: Figure
     {
+        private Point Centre { get; set; }
+
         public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {
             int Width = FinishPoint.X - StartPoint.X;
-            if (((Width > 0) && (FinishPoint.Y < StartPoint.Y)) || ((Width < 0) && (FinishPoint.Y > StartPoint.Y)))
+            int Height;
+            if (IsIn1or3quarter(Width))
             {
-                g.DrawEllipse(pen, StartPoint.X, StartPoint.Y, Width, -Width);
+                Height = -Width;
             }
             else
             {
-                g.DrawEllipse(pen, StartPoint.X, StartPoint.Y, Width, Width);
+                Height = Width;
             }
+            g.DrawEllipse(pen, StartPoint.X, StartPoint.Y, Width, Height);
+            Centre = new Point(StartPoint.X + Width / 2, StartPoint.Y + Height / 2);
+        }
+
+        private bool IsIn1or3quarter(int Width)
+        {
+            if (((Width > 0) && (FinishPoint.Y < StartPoint.Y)) || ((Width < 0) && (FinishPoint.Y > StartPoint.Y)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override bool IsPointIn(Point point)
+        {
+            int Width = FinishPoint.X - StartPoint.X;
+            double distance = Math.Sqrt(Math.Pow((point.X - Centre.X), 2) + Math.Pow((point.Y - Centre.Y), 2));
+
+            if (distance >= Width/2)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public override object Clone()
+        {
+            return (Circle)MemberwiseClone();
         }
     }
 }

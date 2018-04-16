@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
 using System.Runtime.Serialization;
+using System;
 
 namespace PaintF
 {
     [DataContract]
-    public abstract class Figure
+    public abstract class Figure : ISelectable, ICloneable
     {
         private Pen pen;
 
@@ -32,6 +33,10 @@ namespace PaintF
         {
             Pen = new Pen(penColor, penWidth);
         }
+
+        public abstract bool IsPointIn(Point point);
+
+        public abstract object Clone();
 
         [DataMember]
         public Point StartPoint { get; set; }

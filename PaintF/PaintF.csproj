@@ -59,6 +59,8 @@
     <Compile Include="Figure.cs" />
     <Compile Include="FigureCreator.cs" />
     <Compile Include="FigureCreatorList.cs" />
+    <Compile Include="Highlighter.cs" />
+    <Compile Include="ISelectable.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="LineCreator.cs" />
     <Compile Include="Paint.cs">

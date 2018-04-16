@@ -1,4 +1,4 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
 using System.Drawing;
 
 namespace PaintF
@@ -10,6 +10,26 @@ namespace PaintF
             Point[] point = { StartPoint, FinishPoint, new Point (StartPoint.X, FinishPoint.Y + (FinishPoint.Y - StartPoint.Y)),
                                                        new Point (StartPoint.X - (FinishPoint.X - StartPoint.X), FinishPoint.Y)};
             g.DrawPolygon(pen, point);
+        }
+
+        public override bool IsPointIn(Point point)
+        {
+            Point centre = new Point(StartPoint.X, FinishPoint.Y);
+            int halfHeight = Math.Abs(FinishPoint.Y - StartPoint.Y);
+            int halfWidth = Math.Abs(FinishPoint.X - StartPoint.X);
+            if (halfHeight*Math.Abs(point.X - centre.X) + halfWidth * Math.Abs (point.Y - centre.Y) <= halfWidth * halfHeight)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override object Clone()
+        {
+            return (Rhombus)MemberwiseClone();
         }
     }
 }
