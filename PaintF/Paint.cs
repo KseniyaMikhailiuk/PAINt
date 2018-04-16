@@ -6,13 +6,14 @@ namespace PaintF
 {
     public partial class Paint : Form
     {
-        FigureList figureList = new FigureList();
+        FigureList FigureList = new FigureList();
 
-        FigureCreatorList figureCreatorList = new FigureCreatorList();
+        FigureCreatorList FigureCreatorList = new FigureCreatorList();
 
-        FigureCreator figureCreator;
+        FigureCreator FigureCreator;
 
-        Figure figure;
+        Figure Figure;
+        Figure CopiedFigure;
 
         Color penColor = Color.Black;
         int penWidth = 1;
@@ -20,8 +21,10 @@ namespace PaintF
         Pen pen = new Pen(Color.Black, 1);
         Highlighter Highlighter = new Highlighter() { IsHighlighted = false};
 
+        public bool IsPastButtonPressed = false;
+        public bool IsItFirstPast = false;
         public bool isClicked = false;
-        public bool isHighlighterOn = false;
+        public bool IsHighlighterOn = false;
 
         public struct MenuItemInfo
         {
@@ -40,8 +43,8 @@ namespace PaintF
             Color[] colorArray = new Color[] { Color.Black, Color.Blue, Color.Orange, Color.Green,
                                                Color.Gold, Color.Indigo, Color.HotPink, Color.LimeGreen, Color.Red };
 
-            MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandker)), new MenuItem("Copy"),
-                                                        new MenuItem("Paste")};
+            MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandler)), new MenuItem("Copy", new EventHandler(ContextMenuCopyClickHandler)),
+                                                        new MenuItem("Paste", new EventHandler(ContextMenuPasteClickHandler))};
             ContextMenu = new ContextMenu(menuItems);
 
             MenuItemInfo[] itemsArray = new MenuItemInfo[] {
@@ -76,28 +79,49 @@ namespace PaintF
             }
         }
 
-        private void ContextMenuDeleteClickHandker(object sender, EventArgs e)
+        private void ContextMenuDeleteClickHandler(object sender, EventArgs e)
         {
-            if ((Highlighter.SelectedFigure != null) && (isHighlighterOn))
+            if ((Highlighter.SelectedFigure != null) && (IsHighlighterOn))
             {
-                figureList.Figures.Remove(Highlighter.SelectedFigure);
+                FigureList.Figures.Remove(Highlighter.SelectedFigure);
                 Graphics g = pictureBox1.CreateGraphics();
                 g.Clear(pictureBox1.BackColor);
                 RepaintFigureList(g);
             }
         }
 
+        private void ContextMenuCopyClickHandler(object sender, EventArgs e)
+        {
+            if ((Highlighter.SelectedFigure != null) && (IsHighlighterOn))
+            {
+                CopiedFigure = (Figure)Highlighter.SelectedFigure.Clone();
+                IsItFirstPast = true;
+            }
+        }
+
+        private void ContextMenuPasteClickHandler(object sender, EventArgs e)
+        {
+            if ((IsHighlighterOn) && (CopiedFigure != null))
+            {
+                if (!IsItFirstPast)
+                {
+                    CopiedFigure = (Figure)CopiedFigure.Clone();
+                }
+                IsPastButtonPressed = true;
+            }
+        }
+
         private void MenuItemFigureClickHandler(object sender, EventArgs e)
         {
-            if (isHighlighterOn)
+            if (IsHighlighterOn)
             {
-                isHighlighterOn = false;
+                IsHighlighterOn = false;
                 Highlighter.IsHighlighted = false;
             }
 
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
 
-            figureCreator = (FigureCreator)clickedItem.Tag;
+            FigureCreator = (FigureCreator)clickedItem.Tag;
         }
 
         private void MenuItemColorClickHandler(object sender, EventArgs e)
@@ -109,18 +133,18 @@ namespace PaintF
 
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (isHighlighterOn)
+            if (IsHighlighterOn)
             {
                 Graphics g = pictureBox1.CreateGraphics();
                 RepaintFigureList(g);
-                Highlighter.Start(new Point(e.X, e.Y), figureList.Figures, pictureBox1, Highlighter.IsHighlighted);
+                Highlighter.Start(new Point(e.X, e.Y), FigureList.Figures, pictureBox1, Highlighter.IsHighlighted);
             }
             else
             {
-                if (figureCreator != null)
+                if (FigureCreator != null)
                 {
-                    figure = figureCreator.Create();
-                    figure.Pen = pen;
+                    Figure = FigureCreator.Create();
+                    Figure.Pen = pen;
                     isClicked = true;
                     StartPoint = new Point(e.X, e.Y);
                 }
@@ -132,9 +156,9 @@ namespace PaintF
             if (isClicked)
             {
                 isClicked = false;
-                if (figure != null)
+                if (Figure != null)
                 {
-                    figureList.Figures.Add(figure);
+                    FigureList.Figures.Add(Figure);
                 }
             }
         }
@@ -142,9 +166,9 @@ namespace PaintF
 
         public void RepaintFigureList(Graphics g)
         {
-            if (figureList.Figures.Count > 0)
+            if (FigureList.Figures.Count > 0)
             {
-                foreach (var fig in figureList.Figures)
+                foreach (var fig in FigureList.Figures)
                 {
                     fig.Draw(g, fig.Pen, fig.StartPoint, fig.FinishPoint);
                 }
@@ -153,18 +177,18 @@ namespace PaintF
 
         public void PictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            if (figure != null)
+            if (Figure != null)
             {
-                figure.StartPoint = StartPoint;
-                figure.FinishPoint = FinishPoint;
-                figure.Draw(e.Graphics, figure.Pen, figure.StartPoint, figure.FinishPoint);
+                Figure.StartPoint = StartPoint;
+                Figure.FinishPoint = FinishPoint;
+                Figure.Draw(e.Graphics, Figure.Pen, Figure.StartPoint, Figure.FinishPoint);
                 RepaintFigureList(e.Graphics);
             }
         }
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isHighlighterOn)
+            if (IsHighlighterOn)
             {
                 Cursor = Cursors.Hand;
             }
@@ -185,7 +209,7 @@ namespace PaintF
             int finishX = 160;
             int finishY = startY + 60;
 
-            foreach (var creator in figureCreatorList.Creators)
+            foreach (var creator in FigureCreatorList.Creators)
             {
                 allFigurePainter = creator.Create();
                 allFigurePainter.StartPoint = new Point(startX, startY);
@@ -194,7 +218,7 @@ namespace PaintF
                 allFigurePainter.Draw(g, allFigurePainter.Pen, allFigurePainter.StartPoint, allFigurePainter.FinishPoint);
                 if (allFigurePainter != null)
                 {
-                    figureList.Figures.Add(allFigurePainter);
+                    FigureList.Figures.Add(allFigurePainter);
                 }
                 startY += 100;
                 finishY = startY + 50;
@@ -205,9 +229,9 @@ namespace PaintF
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var serializer = new Serializer(); 
-            if (figureList.Figures.Count != 0)
+            if (FigureList.Figures.Count != 0)
             {
-                serializer.Serialize(figureList.Figures);
+                serializer.Serialize(FigureList.Figures);
             }
             else
             {
@@ -222,7 +246,7 @@ namespace PaintF
         {
             ClearSurface();
             var deserializer = new Serializer();
-            figureList.Figures = deserializer.Deserialize();
+            FigureList.Figures = deserializer.Deserialize();
             Graphics g = pictureBox1.CreateGraphics();
             RepaintFigureList(g);
         }
@@ -231,7 +255,7 @@ namespace PaintF
         {
             Graphics g = pictureBox1.CreateGraphics();
             g.Clear(Color.White);
-            figureList.Figures.Clear();
+            FigureList.Figures.Clear();
         }
 
 
@@ -249,14 +273,22 @@ namespace PaintF
 
         private void highlightToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            isHighlighterOn = true;
+            IsHighlighterOn = true;
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            if (IsPastButtonPressed)
             {
-                ContextMenu.Show((Control)sender, new Point(e.X, e.Y));
+                Point temp = CopiedFigure.StartPoint;
+                CopiedFigure.StartPoint = new Point(e.X, e.Y); 
+                CopiedFigure.FinishPoint = new Point(CopiedFigure.StartPoint.X + Math.Abs((temp.X - CopiedFigure.FinishPoint.X)),
+                                                    CopiedFigure.StartPoint.Y + Math.Abs((temp.Y - CopiedFigure.FinishPoint.Y)));
+                FigureList.Figures.Add(CopiedFigure);
+                Graphics g = pictureBox1.CreateGraphics();
+                RepaintFigureList(g);
+                IsPastButtonPressed = false;
+                IsItFirstPast = false;
             }
         }
     }

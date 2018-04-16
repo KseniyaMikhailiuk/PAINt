@@ -31,7 +31,7 @@ namespace PaintF
 
         public Figure RecognizeFigure(Point point, List<Figure> list) 
         {
-            foreach (var figure in list)
+             foreach (var figure in list)
             {
                 if (figure.IsPointIn(point))
                 {

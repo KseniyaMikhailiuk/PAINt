@@ -49,6 +49,7 @@ namespace PaintF
                 {
                     TypeNameHandling = TypeNameHandling.All
                 });
+                fileStream.Close();
                 return figures;
             }
             catch (Exception ex)
