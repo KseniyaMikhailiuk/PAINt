@@ -17,7 +17,8 @@ namespace PaintF
             Point centre = new Point(StartPoint.X, FinishPoint.Y);
             int halfHeight = Math.Abs(FinishPoint.Y - StartPoint.Y);
             int halfWidth = Math.Abs(FinishPoint.X - StartPoint.X);
-            if (halfHeight*Math.Abs(point.X - centre.X) + halfWidth * Math.Abs (point.Y - centre.Y) <= halfWidth * halfHeight)
+            if (halfHeight*Math.Abs(point.X - centre.X) + halfWidth * 
+                Math.Abs (point.Y - centre.Y) <= halfWidth * halfHeight)
             {
                 return true;
             }

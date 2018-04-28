@@ -20,7 +20,8 @@ namespace PaintF
             int Height = FinishPoint.Y - StartPoint.Y;
             int Width = FinishPoint.X - StartPoint.X;
             Point newPointCoordinates = new Point(point.X - Centre.X, point.Y - Centre.Y);
-            if ((Math.Pow(newPointCoordinates.X, 2) / Math.Pow(Width/2, 2) + (Math.Pow(newPointCoordinates.Y, 2))/Math.Pow(Height/2, 2)) < 1)
+            if ((Math.Pow(newPointCoordinates.X, 2) / Math.Pow(Width/2, 2) + 
+                (Math.Pow(newPointCoordinates.Y, 2))/Math.Pow(Height/2, 2)) < 1)
             {
                 return true;
             }

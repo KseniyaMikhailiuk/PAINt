@@ -22,7 +22,9 @@ namespace PaintF
             }
             for (int i = start; i <= finish; i++)
             {
-                if (((point.Y <= Math.Round(i * k + b) + Pen.Width + 3) && (point.Y >= Math.Round(i * k + b) - Pen.Width - 3)) && ((point.X <= i + Pen.Width + 3) && (point.X >= i - Pen.Width - 3)))
+                if (((point.Y <= Math.Round(i * k + b) + Pen.Width + 3) &&
+                    (point.Y >= Math.Round(i * k + b) - Pen.Width - 3)) && 
+                    ((point.X <= i + Pen.Width + 3) && (point.X >= i - Pen.Width - 3)))
                 {
                     return true;
                 }

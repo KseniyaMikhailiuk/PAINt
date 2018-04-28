@@ -45,7 +45,8 @@ namespace PaintF
                 string data = fileStream.ReadToEnd();
                 byte[] result = Convert.FromBase64String(data);
                 string kek = Encoding.Default.GetString(result);
-                List<Figure> figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result), new JsonSerializerSettings
+                List<Figure> figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result), 
+                    new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.All
                 });

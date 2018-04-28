@@ -40,20 +40,29 @@ namespace PaintF
         {
             InitializeComponent();
 
-            Color[] colorArray = new Color[] { Color.Black, Color.Blue, Color.Orange, Color.Green,
-                                               Color.Gold, Color.Indigo, Color.HotPink, Color.LimeGreen, Color.Red };
-
-            MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandler)), new MenuItem("Copy", new EventHandler(ContextMenuCopyClickHandler)),
-                                                        new MenuItem("Paste", new EventHandler(ContextMenuPasteClickHandler))};
+            MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandler)),
+                                                   new MenuItem("Copy", new EventHandler(ContextMenuCopyClickHandler)),
+                                                   new MenuItem("Paste", new EventHandler(ContextMenuPasteClickHandler))};
             ContextMenu = new ContextMenu(menuItems);
 
             MenuItemInfo[] itemsArray = new MenuItemInfo[] {
-                new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString(), FigureCreator = new LineCreator() },
-                new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString(), FigureCreator = new RectangleCreator()},
-                new MenuItemInfo { figureName = "Square", creatorType = (typeof(SquareCreator)).ToString(), FigureCreator = new SquareCreator()},
-                new MenuItemInfo { figureName = "Rhombus", creatorType = (typeof(RhombusCreator)).ToString(), FigureCreator = new RhombusCreator()},
-                new MenuItemInfo { figureName = "Circle", creatorType = (typeof(CircleCreator)).ToString(), FigureCreator = new CircleCreator()},
-                new MenuItemInfo { figureName = "Ellipce", creatorType = (typeof(EllipseCreator)).ToString(), FigureCreator = new EllipseCreator()}
+                new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString(),
+                                    FigureCreator = new LineCreator() },
+
+                new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString(),
+                                    FigureCreator = new RectangleCreator()},
+
+                new MenuItemInfo { figureName = "Square", creatorType = (typeof(SquareCreator)).ToString(),
+                                    FigureCreator = new SquareCreator()},
+
+                new MenuItemInfo { figureName = "Rhombus", creatorType = (typeof(RhombusCreator)).ToString(),
+                                    FigureCreator = new RhombusCreator()},
+
+                new MenuItemInfo { figureName = "Circle", creatorType = (typeof(CircleCreator)).ToString(),
+                                    FigureCreator = new CircleCreator()},
+
+                new MenuItemInfo { figureName = "Ellipce", creatorType = (typeof(EllipseCreator)).ToString(),
+                                    FigureCreator = new EllipseCreator()}
             };
 
             ToolStripMenuItem menuItem;
@@ -66,16 +75,6 @@ namespace PaintF
                 };
                 menuItem.Click += new EventHandler(MenuItemFigureClickHandler);
                 figuresToolStripMenuItem.DropDownItems.Add(menuItem);
-            }
-
-            foreach (Color color in colorArray)
-            {
-                menuItem = new ToolStripMenuItem()
-                {
-                    BackColor = color
-                };
-                menuItem.Click += new EventHandler(MenuItemColorClickHandler);
-                colorToolStripMenuItem.DropDownItems.Add(menuItem);
             }
         }
 
@@ -124,10 +123,10 @@ namespace PaintF
             FigureCreator = (FigureCreator)clickedItem.Tag;
         }
 
-        private void MenuItemColorClickHandler(object sender, EventArgs e)
+        private void MenuColorClickHandler(object sender, EventArgs e)
         {
-            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
-            penColor = clickedItem.BackColor;
+            colorDialog1.ShowDialog();
+            penColor = colorDialog1.Color;
             pen = new Pen(penColor, penWidth);
         }
 
@@ -264,13 +263,6 @@ namespace PaintF
             ClearSurface();
         }
 
-        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-            ScrollBar scrollBar = (ScrollBar)sender;
-            penWidth = scrollBar.Value;
-            pen = new Pen(penColor, penWidth);
-        }
-
         private void highlightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IsHighlighterOn = true;
@@ -290,6 +282,12 @@ namespace PaintF
                 IsPastButtonPressed = false;
                 IsItFirstPast = false;
             }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            penWidth = trackBar1.Value;
+            pen = new Pen(penColor, penWidth);
         }
     }
 }

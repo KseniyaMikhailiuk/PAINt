@@ -38,9 +38,11 @@
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.highlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -112,6 +114,7 @@
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
             this.colorToolStripMenuItem.Size = new System.Drawing.Size(84, 36);
             this.colorToolStripMenuItem.Text = "Color";
+            this.colorToolStripMenuItem.Click += new System.EventHandler(this.MenuColorClickHandler);
             // 
             // highlightToolStripMenuItem
             // 
@@ -123,10 +126,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.LightGray;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 97);
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 136);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1970, 1327);
+            this.pictureBox1.Size = new System.Drawing.Size(1970, 1333);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.PictureBox1_Paint);
@@ -135,18 +138,16 @@
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseUp);
             // 
-            // hScrollBar1
+            // trackBar1
             // 
-            this.hScrollBar1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.hScrollBar1.LargeChange = 3;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 51);
-            this.hScrollBar1.Maximum = 25;
-            this.hScrollBar1.Minimum = 1;
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(262, 14);
-            this.hScrollBar1.TabIndex = 1;
-            this.hScrollBar1.Value = 1;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            this.trackBar1.LargeChange = 1;
+            this.trackBar1.Location = new System.Drawing.Point(0, 46);
+            this.trackBar1.Minimum = 1;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(500, 90);
+            this.trackBar1.TabIndex = 2;
+            this.trackBar1.Value = 1;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // Paint
             // 
@@ -155,7 +156,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1970, 1425);
-            this.Controls.Add(this.hScrollBar1);
+            this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -168,6 +169,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -184,7 +186,8 @@
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem highlightToolStripMenuItem;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }
 
