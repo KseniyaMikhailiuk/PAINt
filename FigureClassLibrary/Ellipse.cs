@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using AbstractFigureClassLibrary;
 
-namespace PaintF
+namespace FigureClassLibrary
 {
-    class Ellipse: Figure
+    public class Ellipse: Figure
     {
         private Point Centre { get; set; }
 

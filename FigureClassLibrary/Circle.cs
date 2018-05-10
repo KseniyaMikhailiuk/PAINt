@@ -1,11 +1,10 @@
 ﻿using System.Drawing;
 using System;
+using AbstractFigureClassLibrary;
 
-
-
-namespace PaintF
+namespace FigureClassLibrary
 {
-    class Circle: Figure
+    public class Circle : Figure
     {
         private Point Centre { get; set; }
 

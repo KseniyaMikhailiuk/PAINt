@@ -1,9 +1,10 @@
-﻿using System.Drawing;
-using System;
+﻿using System;
+using System.Drawing;
+using AbstractFigureClassLibrary;
 
-namespace PaintF
+namespace FigureClassLibrary
 {
-    class Square: Figure
+    public class Square: Figure
     {
         public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {

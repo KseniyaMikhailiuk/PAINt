@@ -1,11 +1,10 @@
-﻿using System.Runtime.Serialization;
-using System.Drawing;
+﻿using System.Drawing;
 using System;
+using AbstractFigureClassLibrary;
 
-
-namespace PaintF
+namespace FigureClassLibrary
 {
-    class Rectangle : Figure
+    public class Rectangle : Figure
     { 
         public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {

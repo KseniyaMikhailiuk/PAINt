@@ -39,28 +39,41 @@ namespace PaintF
 
         public List<Figure> Deserialize()
         {
-            try
+            List<Figure> figures = new List<Figure> { };
+            if (File.Exists(fileName))
             {
                 var fileStream = new StreamReader(File.Open(fileName, FileMode.Open));
-                string data = fileStream.ReadToEnd();
-                byte[] result = Convert.FromBase64String(data);
-                string kek = Encoding.Default.GetString(result);
-                List<Figure> figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result), 
-                    new JsonSerializerSettings
+                try
                 {
-                    TypeNameHandling = TypeNameHandling.All
-                });
-                fileStream.Close();
+                    string data = fileStream.ReadToEnd();
+                    byte[] result = Convert.FromBase64String(data);
+                    string kek = Encoding.Default.GetString(result);
+                    figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result),
+                        new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.All
+                        });
+                    fileStream.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxButtons button = MessageBoxButtons.OK;
+                    string caption = "Error";
+                    MessageBox.Show(ex.Message, caption, button);
+                }
+                finally
+                {
+                    if (fileStream != null)
+                        ((IDisposable)fileStream).Dispose();
+                }
                 return figures;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBoxButtons button = MessageBoxButtons.OK;
-                string caption = "Error";
-                MessageBox.Show(ex.Message, caption, button);
-                List<Figure> figures = new List<Figure> { };
+                MessageBox.Show("отсутствует файл для десериализации(", "Error", MessageBoxButtons.OK);
                 return figures;
             }
+
         }
     }
 }
