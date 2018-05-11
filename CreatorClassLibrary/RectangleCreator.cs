@@ -1,8 +1,6 @@
-﻿using AbstractFigureClassLibrary;
-
-namespace FigureClassLibrary
+﻿namespace FigureClassLibrary
 {
-    class RectangleCreator:FigureCreator
+    public class RectangleCreator:FigureCreator
     {
         public override Figure Create()
         {

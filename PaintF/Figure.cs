@@ -38,11 +38,6 @@ namespace PaintF
 
         public abstract object Clone();
 
-        public void kek()
-        {
-            
-        }
-
         [DataMember]
         public Point StartPoint { get; set; }
         [DataMember]

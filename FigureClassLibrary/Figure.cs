@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using System;
 using IPluginFigure;
 
-namespace AbstractFigureClassLibrary
+namespace FigureClassLibrary
 {
     [Serializable]
     [DataContract]

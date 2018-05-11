@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\PaintF\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,6 +53,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IPluginCreator\PluginCreator.csproj">
+      <Project>{39070c70-21df-4f96-aab6-43c507360977}</Project>
+      <Name>PluginCreator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPlugin\IPluginFigure.csproj">
+      <Project>{4f7a29e8-3711-4d23-91b9-fa2895939fd3}</Project>
+      <Name>IPluginFigure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

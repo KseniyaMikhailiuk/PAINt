@@ -1,8 +1,6 @@
-﻿using AbstractFigureClassLibrary;
-
-namespace FigureClassLibrary
+﻿namespace FigureClassLibrary
 {
-    class LineCreator: FigureCreator
+    public class LineCreator: FigureCreator
     {
         public override Figure Create()
         {

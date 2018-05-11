@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
+using PluginCreator;
+using IPluginFigure;
+using System.Linq;
+//using CreatorClassLibrary;
 
 namespace PaintF
 {
@@ -76,6 +82,7 @@ namespace PaintF
                 menuItem.Click += new EventHandler(MenuItemFigureClickHandler);
                 figuresToolStripMenuItem.DropDownItems.Add(menuItem);
             }
+            AddPlugins();
         }
 
         private void ContextMenuDeleteClickHandler(object sender, EventArgs e)
@@ -288,6 +295,46 @@ namespace PaintF
         {
             penWidth = trackBar1.Value;
             pen = new Pen(penColor, penWidth);
+        }
+
+        public void AddPlugins()
+        {
+            // Находим каталог, содержащий файл Host.exe      
+            String AddInDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            // Предполагается, что сборки подключаемых модулей       
+            // находятся в одном каталоге с EXE-файлом хоста       
+            var AddInAssemblies = Directory.EnumerateFiles(AddInDir, "*Library.dll");
+            // Создание набора объектов Type, которые могут       
+            // использоваться хостом  
+
+            foreach (var ass in AddInAssemblies)
+            {
+                Assembly assembly = Assembly.LoadFrom(ass);
+                Type[] types = assembly.GetExportedTypes();
+                foreach (var type in types)
+                {
+                    if (type.IsClass && typeof(IPluginCreator).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()) && !type.IsAbstract)
+                    {
+                        var plugin = Activator.CreateInstance(type);
+                        FigureCreatorList.Creators.Add((FigureCreator)plugin);
+                    }
+                }
+            }
+
+            //var AddInTypes = from file in AddInAssemblies
+            //                 let assembly = Assembly.Load(file)
+            //                 from t in assembly.ExportedTypes // Открыто экспортируемые типы          
+            //                                                  // Тип может использоваться, если это класс, реализующий IPlugin         
+            //                 where t.IsClass && (typeof(IPlugin).GetTypeInfo().IsAssignableFrom(t.GetTypeInfo())
+            //                                            || typeof(IPluginCreator).GetTypeInfo().IsAssignableFrom(t.GetTypeInfo()))
+            //                 select t;
+
+            // Инициализация завершена: хост обнаружил типы, пригодные для использования        
+            // Пример конструирования объектов подключаемых компонентов        
+            // и их использования хостом
+
+            //foreach (Type t in AddInTypes) { IPlugin ai = (IPlugin)Activator.CreateInstance(t); Console.WriteLine(ai.Draw(5)); }
+
         }
     }
 }

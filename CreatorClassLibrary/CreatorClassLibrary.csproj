@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\PaintF\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="CircleCreator.cs" />
     <Compile Include="EllipseCreator.cs" />
+    <Compile Include="FigureCreator.cs" />
     <Compile Include="LineCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleCreator.cs" />
@@ -49,13 +50,13 @@
     <Compile Include="SquareCreator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbstractFigureClassLibrary\AbstractFigureClassLibrary.csproj">
-      <Project>{c555102b-ab13-456a-95dc-1d3c3cade5f9}</Project>
-      <Name>AbstractFigureClassLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FigureClassLibrary\FigureClassLibrary.csproj">
       <Project>{cc3da080-5b1a-418f-83cc-82239e0aa8db}</Project>
       <Name>FigureClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPluginCreator\PluginCreator.csproj">
+      <Project>{39070c70-21df-4f96-aab6-43c507360977}</Project>
+      <Name>PluginCreator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,6 @@
-﻿using AbstractFigureClassLibrary;
-
-namespace FigureClassLibrary
+﻿namespace FigureClassLibrary
 {
-    class EllipseCreator: FigureCreator
+    public class EllipseCreator: FigureCreator
     {
         public override Figure Create()
         {

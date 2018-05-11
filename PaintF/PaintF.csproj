@@ -106,5 +106,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CreatorClassLibrary\CreatorClassLibrary.csproj">
+      <Project>{062d3a1a-11c1-403d-9497-987208742aa5}</Project>
+      <Name>CreatorClassLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPluginCreator\PluginCreator.csproj">
+      <Project>{39070c70-21df-4f96-aab6-43c507360977}</Project>
+      <Name>PluginCreator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IPlugin\IPluginFigure.csproj">
+      <Project>{4f7a29e8-3711-4d23-91b9-fa2895939fd3}</Project>
+      <Name>IPluginFigure</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

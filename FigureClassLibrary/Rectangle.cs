@@ -1,11 +1,10 @@
 ﻿using System.Drawing;
 using System;
-using AbstractFigureClassLibrary;
 
 namespace FigureClassLibrary
 {
     public class Rectangle : Figure
-    { 
+    {
         public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {
             int Height = Math.Abs(FinishPoint.Y - StartPoint.Y);
@@ -27,7 +26,7 @@ namespace FigureClassLibrary
                 && ((point.Y <= FinishPoint.Y) && (point.Y >= StartPoint.Y)));
         }
 
-        public override object Clone()
+    public override object Clone()
         {
             return (Rectangle)MemberwiseClone();
         }

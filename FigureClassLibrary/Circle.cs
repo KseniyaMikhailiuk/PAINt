@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System;
-using AbstractFigureClassLibrary;
 
 namespace FigureClassLibrary
 {

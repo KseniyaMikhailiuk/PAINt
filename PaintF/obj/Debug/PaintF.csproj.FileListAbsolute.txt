@@ -12,3 +12,7 @@ C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.B
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.dll
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.xml
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\Newtonsoft.Json.Bson.xml
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPlugin.dll
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPlugin.pdb
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPluginCreator.dll
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPluginCreator.pdb
