@@ -1,6 +1,8 @@
 ﻿using PluginCreator;
 using System;
-namespace FigureClassLibrary
+using PaintF;
+
+namespace CreatorClassLibrary
 {
     [Serializable]
     public abstract class FigureCreator: IPluginCreator

@@ -16,3 +16,5 @@ C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPlugin.dll
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPlugin.pdb
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPluginCreator.dll
 C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\IPluginCreator.pdb
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\CreatorClassLibrary.pdb
+C:\Users\дэл\Desktop\BSUIR\3\ООП\PaintF\PaintF\bin\Debug\FigureClassLibrary.pdb

@@ -1,6 +1,6 @@
-﻿using FigureClassLibrary;
+﻿using PaintF;
 
-namespace PaintF
+namespace CreatorClassLibrary
 {
     public class RhombusCreator: FigureCreator
     {

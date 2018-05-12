@@ -1,4 +1,6 @@
-﻿namespace FigureClassLibrary
+﻿using PaintF;
+
+namespace CreatorClassLibrary
 {
     public class SquareCreator: FigureCreator
     {

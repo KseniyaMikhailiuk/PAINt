@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace FigureClassLibrary
+namespace PaintF
 {
     public interface ISelectable
     {

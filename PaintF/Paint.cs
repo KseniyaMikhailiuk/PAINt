@@ -4,9 +4,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using PluginCreator;
-using IPluginFigure;
-using System.Linq;
-//using CreatorClassLibrary;
+using CreatorClassLibrary;
 
 namespace PaintF
 {
@@ -44,6 +42,7 @@ namespace PaintF
 
         public Paint()
         {
+            AddPlugins();
             InitializeComponent();
 
             MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandler)),
@@ -82,7 +81,7 @@ namespace PaintF
                 menuItem.Click += new EventHandler(MenuItemFigureClickHandler);
                 figuresToolStripMenuItem.DropDownItems.Add(menuItem);
             }
-            AddPlugins();
+            
         }
 
         private void ContextMenuDeleteClickHandler(object sender, EventArgs e)
