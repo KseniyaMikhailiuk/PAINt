@@ -40,14 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CircleCreator.cs" />
-    <Compile Include="EllipseCreator.cs" />
     <Compile Include="FigureCreator.cs" />
-    <Compile Include="LineCreator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RectangleCreator.cs" />
-    <Compile Include="RhombusCreator.cs" />
-    <Compile Include="SquareCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FigureClassLibrary\FigureClassLibrary.csproj">

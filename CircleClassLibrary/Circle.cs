@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
+using AbstractClassLibrary;
 using System;
 
-namespace PaintF
+namespace CircleClassLibrary
 {
     public class Circle : Figure
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using AbstractClassLibrary;
 
-namespace PaintF
+namespace SquareClassLibrary
 {
     public class Square: Figure
     {

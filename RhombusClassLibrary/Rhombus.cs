@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using AbstractClassLibrary;
 
-namespace PaintF
+namespace RhombusClassLibrary
 {
-    public class Rhombus: Figure
+    public class Rhombus : Figure
     {
         public override void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint)
         {

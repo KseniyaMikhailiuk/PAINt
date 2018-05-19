@@ -34,7 +34,6 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.figuresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.paintAllFiguresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.highlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -52,7 +51,6 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.figuresToolStripMenuItem,
-            this.paintAllFiguresToolStripMenuItem,
             this.colorToolStripMenuItem,
             this.highlightToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -69,7 +67,7 @@
             this.clearToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 36);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 38);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // saveToolStripMenuItem
@@ -97,22 +95,14 @@
             // 
             this.figuresToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.figuresToolStripMenuItem.Name = "figuresToolStripMenuItem";
-            this.figuresToolStripMenuItem.Size = new System.Drawing.Size(104, 36);
+            this.figuresToolStripMenuItem.Size = new System.Drawing.Size(104, 38);
             this.figuresToolStripMenuItem.Text = "Figures";
-            // 
-            // paintAllFiguresToolStripMenuItem
-            // 
-            this.paintAllFiguresToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.paintAllFiguresToolStripMenuItem.Name = "paintAllFiguresToolStripMenuItem";
-            this.paintAllFiguresToolStripMenuItem.Size = new System.Drawing.Size(190, 36);
-            this.paintAllFiguresToolStripMenuItem.Text = "Paint all figures";
-            this.paintAllFiguresToolStripMenuItem.Click += new System.EventHandler(this.paintAllFiguresToolStripMenuItem_Click);
             // 
             // colorToolStripMenuItem
             // 
             this.colorToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
-            this.colorToolStripMenuItem.Size = new System.Drawing.Size(84, 36);
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(84, 38);
             this.colorToolStripMenuItem.Text = "Color";
             this.colorToolStripMenuItem.Click += new System.EventHandler(this.MenuColorClickHandler);
             // 
@@ -120,7 +110,7 @@
             // 
             this.highlightToolStripMenuItem.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.highlightToolStripMenuItem.Name = "highlightToolStripMenuItem";
-            this.highlightToolStripMenuItem.Size = new System.Drawing.Size(126, 36);
+            this.highlightToolStripMenuItem.Size = new System.Drawing.Size(126, 38);
             this.highlightToolStripMenuItem.Text = "Highlight";
             this.highlightToolStripMenuItem.Click += new System.EventHandler(this.highlightToolStripMenuItem_Click);
             // 
@@ -153,7 +143,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.ClientSize = new System.Drawing.Size(1970, 1425);
             this.Controls.Add(this.trackBar1);
@@ -178,7 +168,6 @@
         #endregion
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem figuresToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem paintAllFiguresToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem colorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;

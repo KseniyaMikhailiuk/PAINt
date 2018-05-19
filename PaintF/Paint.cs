@@ -3,8 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
-using PluginCreator;
-using CreatorClassLibrary;
+using AbstractClassLibrary;
+using System.Collections.Generic;
 
 namespace PaintF
 {
@@ -49,30 +49,28 @@ namespace PaintF
                                                    new MenuItem("Copy", new EventHandler(ContextMenuCopyClickHandler)),
                                                    new MenuItem("Paste", new EventHandler(ContextMenuPasteClickHandler))};
             ContextMenu = new ContextMenu(menuItems);
-
-            MenuItemInfo[] itemsArray = new MenuItemInfo[] {
-                new MenuItemInfo { figureName = "Line", creatorType = (typeof(LineCreator)).ToString(),
-                                    FigureCreator = new LineCreator() },
-
-                new MenuItemInfo { figureName = "Rectangle", creatorType = (typeof(RectangleCreator)).ToString(),
-                                    FigureCreator = new RectangleCreator()},
-
-                new MenuItemInfo { figureName = "Square", creatorType = (typeof(SquareCreator)).ToString(),
-                                    FigureCreator = new SquareCreator()},
-
-                new MenuItemInfo { figureName = "Rhombus", creatorType = (typeof(RhombusCreator)).ToString(),
-                                    FigureCreator = new RhombusCreator()},
-
-                new MenuItemInfo { figureName = "Circle", creatorType = (typeof(CircleCreator)).ToString(),
-                                    FigureCreator = new CircleCreator()},
-
-                new MenuItemInfo { figureName = "Ellipce", creatorType = (typeof(EllipseCreator)).ToString(),
-                                    FigureCreator = new EllipseCreator()}
-            };
+            List<MenuItemInfo> itemsList = new List<MenuItemInfo>();
+            string[] FigureNames = new string[] { "Line", "Rectangle", "Square", "Rhombus", "Circle", "Ellipse" };
+            foreach (var creator in FigureCreatorList.Creators)
+            {
+                foreach (var figurename in FigureNames)
+                {
+                    if ((creator).ToString().Contains(figurename))
+                    {
+                        itemsList.Add(new MenuItemInfo
+                        {
+                            figureName = figurename,
+                            creatorType = (creator).ToString(),
+                            FigureCreator = creator
+                        });
+                        break;
+                    }
+                }
+            }
 
             ToolStripMenuItem menuItem;
 
-            foreach (MenuItemInfo items in itemsArray)
+            foreach (MenuItemInfo items in itemsList)
             {
                 menuItem = new ToolStripMenuItem(items.figureName)
                 {
@@ -205,32 +203,6 @@ namespace PaintF
             }
         }
 
-        private void paintAllFiguresToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Graphics g = pictureBox1.CreateGraphics();
-            Figure allFigurePainter;
-            int startX = 80;
-            int startY = 20;
-            int finishX = 160;
-            int finishY = startY + 60;
-
-            foreach (var creator in FigureCreatorList.Creators)
-            {
-                allFigurePainter = creator.Create();
-                allFigurePainter.StartPoint = new Point(startX, startY);
-                allFigurePainter.FinishPoint = new Point(finishX, finishY);
-                allFigurePainter.Pen = pen;
-                allFigurePainter.Draw(g, allFigurePainter.Pen, allFigurePainter.StartPoint, allFigurePainter.FinishPoint);
-                if (allFigurePainter != null)
-                {
-                    FigureList.Figures.Add(allFigurePainter);
-                }
-                startY += 100;
-                finishY = startY + 50;
-                RepaintFigureList(g);
-            }
-        }
-
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var serializer = new Serializer(); 
@@ -297,43 +269,32 @@ namespace PaintF
         }
 
         public void AddPlugins()
-        {
-            // Находим каталог, содержащий файл Host.exe      
-            String AddInDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            // Предполагается, что сборки подключаемых модулей       
-            // находятся в одном каталоге с EXE-файлом хоста       
+        {   
+            String AddInDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);   
             var AddInAssemblies = Directory.EnumerateFiles(AddInDir, "*Library.dll");
-            // Создание набора объектов Type, которые могут       
-            // использоваться хостом  
 
             foreach (var ass in AddInAssemblies)
             {
-                Assembly assembly = Assembly.LoadFrom(ass);
-                Type[] types = assembly.GetExportedTypes();
-                foreach (var type in types)
+                try
                 {
-                    if (type.IsClass && typeof(IPluginCreator).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()) && !type.IsAbstract)
+                    Assembly assembly = Assembly.LoadFrom(ass);
+                    Type[] types = assembly.GetExportedTypes();
+                    foreach (var type in types)
                     {
-                        var plugin = Activator.CreateInstance(type);
-                        FigureCreatorList.Creators.Add((FigureCreator)plugin);
+                        if (type.IsClass && type.GetTypeInfo().BaseType == typeof(FigureCreator) && !type.IsAbstract)
+                        {
+                            var plugin = Activator.CreateInstance(type);
+                            FigureCreatorList.Creators.Add((FigureCreator)plugin);
+                        }
                     }
                 }
-            }
-
-            //var AddInTypes = from file in AddInAssemblies
-            //                 let assembly = Assembly.Load(file)
-            //                 from t in assembly.ExportedTypes // Открыто экспортируемые типы          
-            //                                                  // Тип может использоваться, если это класс, реализующий IPlugin         
-            //                 where t.IsClass && (typeof(IPlugin).GetTypeInfo().IsAssignableFrom(t.GetTypeInfo())
-            //                                            || typeof(IPluginCreator).GetTypeInfo().IsAssignableFrom(t.GetTypeInfo()))
-            //                 select t;
-
-            // Инициализация завершена: хост обнаружил типы, пригодные для использования        
-            // Пример конструирования объектов подключаемых компонентов        
-            // и их использования хостом
-
-            //foreach (Type t in AddInTypes) { IPlugin ai = (IPlugin)Activator.CreateInstance(t); Console.WriteLine(ai.Draw(5)); }
-
+                catch(Exception ex)
+                {
+                    MessageBoxButtons button = MessageBoxButtons.OK;
+                    string caption = "Error";
+                    MessageBox.Show(ex.Message, caption, button);
+                }
+            }     
         }
     }
 }

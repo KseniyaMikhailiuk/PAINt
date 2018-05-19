@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using AbstractClassLibrary;
 
 
 namespace PaintF
@@ -47,7 +48,6 @@ namespace PaintF
                 {
                     string data = fileStream.ReadToEnd();
                     byte[] result = Convert.FromBase64String(data);
-                    string kek = Encoding.Default.GetString(result);
                     figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result),
                         new JsonSerializerSettings
                         {

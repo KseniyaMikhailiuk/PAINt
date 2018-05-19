@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using AbstractClassLibrary;
 
-namespace PaintF
+namespace EllipseClassLibrary
 {
     public class Ellipse: Figure
     {

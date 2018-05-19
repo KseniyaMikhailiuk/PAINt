@@ -63,7 +63,6 @@
     </Compile>
     <Compile Include="FigureList.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="ToolPen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Paint.resx">
@@ -93,21 +92,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreatorClassLibrary\CreatorClassLibrary.csproj">
-      <Project>{062d3a1a-11c1-403d-9497-987208742aa5}</Project>
-      <Name>CreatorClassLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FigureClassLibrary\FigureClassLibrary.csproj">
-      <Project>{cc3da080-5b1a-418f-83cc-82239e0aa8db}</Project>
-      <Name>FigureClassLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IPluginCreator\PluginCreator.csproj">
-      <Project>{39070c70-21df-4f96-aab6-43c507360977}</Project>
-      <Name>PluginCreator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\IPlugin\IPluginFigure.csproj">
-      <Project>{4f7a29e8-3711-4d23-91b9-fa2895939fd3}</Project>
-      <Name>IPluginFigure</Name>
+    <ProjectReference Include="..\AbstractClassLibrary\AbstractClassLibrary.csproj">
+      <Project>{9b065a96-c040-4b6b-8055-815540fd3117}</Project>
+      <Name>AbstractClassLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

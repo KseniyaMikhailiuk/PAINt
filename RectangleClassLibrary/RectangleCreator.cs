@@ -1,6 +1,6 @@
-﻿using PaintF;
+﻿using AbstractClassLibrary;
 
-namespace CreatorClassLibrary
+namespace RectangleClassLibrary
 {
     public class RectangleCreator:FigureCreator
     {

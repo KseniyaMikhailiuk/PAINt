@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using System;
+using AbstractClassLibrary;
 
-namespace PaintF
+namespace RectangleClassLibrary
 {
     public class Rectangle : Figure
     {

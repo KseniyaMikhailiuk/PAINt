@@ -1,7 +1,9 @@
 ﻿using System.Drawing;
 using System;
+using AbstractClassLibrary;
 
-namespace PaintF
+namespace LineClassLibrary
+
 {
     public class Line: Figure
     {
