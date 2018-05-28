@@ -19,10 +19,12 @@ namespace PaintF
         Figure Figure;
         Figure CopiedFigure;
 
-        Color penColor = Color.Black;
-        int penWidth = 1;
+        internal static Color PenColor = Color.Black;
+        internal static int PenWidth = 1;
 
-        Pen pen = new Pen(Color.Black, 1);
+
+
+        Pen Pen;
         Highlighter Highlighter = new Highlighter() { IsHighlighted = false};
 
         public bool IsPastButtonPressed = false;
@@ -30,12 +32,14 @@ namespace PaintF
         public bool isClicked = false;
         public bool IsHighlighterOn = false;
 
-        public struct MenuItemInfo
+        public struct StripMenuItemInfo
         {
             public string figureName;
-            public string creatorType;
             public FigureCreator FigureCreator;
         }
+
+        public static Color BackgroundColor = Color.White;
+
 
         Point StartPoint;
         Point FinishPoint;
@@ -44,33 +48,42 @@ namespace PaintF
         {
             AddPlugins();
             InitializeComponent();
+            ConfigKeeper.LoadXml();
 
-            MenuItem[] menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandler)),
+
+            List<StripMenuItemInfo> itemsList = new List<StripMenuItemInfo>();
+
+            string[][] FigureNames = new string[][] { new string[]{ "Line", "Rectangle", "Square", "Rhombus", "Circle", "Ellipse" },
+                                                        new string[]{ "Линия", "Прямоугольник", "Квадрат", "Ромб", "Круг", "Эллипс" } };
+
+            MenuItem[]  menuItems = new MenuItem[] {new MenuItem("Delete", new EventHandler(ContextMenuDeleteClickHandler)),
                                                    new MenuItem("Copy", new EventHandler(ContextMenuCopyClickHandler)),
-                                                   new MenuItem("Paste", new EventHandler(ContextMenuPasteClickHandler))};
+                                                   new MenuItem("Paste", new EventHandler(ContextMenuPasteClickHandler)),
+                                                   new MenuItem("Background Color", new EventHandler(ContextMenuBGColorClickHandler))};
+
             ContextMenu = new ContextMenu(menuItems);
-            List<MenuItemInfo> itemsList = new List<MenuItemInfo>();
-            string[] FigureNames = new string[] { "Line", "Rectangle", "Square", "Rhombus", "Circle", "Ellipse" };
+
+
+
             foreach (var creator in FigureCreatorList.Creators)
             {
-                foreach (var figurename in FigureNames)
+                foreach (var figurename in FigureNames[0])
                 {
                     if ((creator).ToString().Contains(figurename))
                     {
-                        itemsList.Add(new MenuItemInfo
+                        itemsList.Add(new StripMenuItemInfo
                         {
                             figureName = figurename,
-                            creatorType = (creator).ToString(),
                             FigureCreator = creator
                         });
                         break;
-                    }
+            }
                 }
             }
 
             ToolStripMenuItem menuItem;
 
-            foreach (MenuItemInfo items in itemsList)
+            foreach (StripMenuItemInfo items in itemsList)
             {
                 menuItem = new ToolStripMenuItem(items.figureName)
                 {
@@ -79,7 +92,9 @@ namespace PaintF
                 menuItem.Click += new EventHandler(MenuItemFigureClickHandler);
                 figuresToolStripMenuItem.DropDownItems.Add(menuItem);
             }
-            
+            Pen = new Pen(PenColor, PenWidth);
+            trackBar1.Value = PenWidth;
+            pictureBox1.BackColor = BackgroundColor;
         }
 
         private void ContextMenuDeleteClickHandler(object sender, EventArgs e)
@@ -91,6 +106,14 @@ namespace PaintF
                 g.Clear(pictureBox1.BackColor);
                 RepaintFigureList(g);
             }
+        }
+
+        private void ContextMenuBGColorClickHandler(object sender, EventArgs e)
+        {
+            isClicked = false;
+            colorDialog1.ShowDialog();
+            BackgroundColor = colorDialog1.Color;
+            pictureBox1.BackColor = BackgroundColor;
         }
 
         private void ContextMenuCopyClickHandler(object sender, EventArgs e)
@@ -114,7 +137,7 @@ namespace PaintF
             }
         }
 
-        private void MenuItemFigureClickHandler(object sender, EventArgs e)
+        internal void MenuItemFigureClickHandler(object sender, EventArgs e)
         {
             if (IsHighlighterOn)
             {
@@ -130,8 +153,8 @@ namespace PaintF
         private void MenuColorClickHandler(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
-            penColor = colorDialog1.Color;
-            pen = new Pen(penColor, penWidth);
+            PenColor = colorDialog1.Color;
+            Pen = new Pen(PenColor, PenWidth);
         }
 
         private void PictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -144,10 +167,10 @@ namespace PaintF
             }
             else
             {
-                if (FigureCreator != null)
+                if (FigureCreator != null && e.Button == MouseButtons.Left)
                 {
                     Figure = FigureCreator.Create();
-                    Figure.Pen = pen;
+                    Figure.Pen = Pen;
                     isClicked = true;
                     StartPoint = new Point(e.X, e.Y);
                 }
@@ -264,8 +287,8 @@ namespace PaintF
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            penWidth = trackBar1.Value;
-            pen = new Pen(penColor, penWidth);
+            PenWidth = trackBar1.Value;
+            Pen = new Pen(PenColor, PenWidth);
         }
 
         public void AddPlugins()
@@ -295,6 +318,11 @@ namespace PaintF
                     MessageBox.Show(ex.Message, caption, button);
                 }
             }     
+        }
+
+        private void Paint_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ConfigKeeper.SaveXml();
         }
     }
 }

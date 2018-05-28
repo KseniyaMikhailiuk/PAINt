@@ -5,6 +5,6 @@ namespace PaintF
 {
     public class FigureCreatorList
     {
-        public List<FigureCreator> Creators = new List<FigureCreator> { };
+        public static List<FigureCreator> Creators = new List<FigureCreator> { };
     }
 }

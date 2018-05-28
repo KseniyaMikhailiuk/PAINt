@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigKeeper.cs" />
     <Compile Include="FigureCreatorList.cs" />
     <Compile Include="Highlighter.cs" />
     <Compile Include="ISelectable.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -96,6 +98,12 @@
       <Project>{9b065a96-c040-4b6b-8055-815540fd3117}</Project>
       <Name>AbstractClassLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\EN.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\RU1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
