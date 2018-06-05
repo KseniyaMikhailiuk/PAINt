@@ -1,12 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
-using System.Reflection;
 using System;
 using System.Xml;
-using System.Xml.Linq;
-using System.Linq;
-using System.Collections.Generic;
 
 
 namespace PaintF
@@ -48,7 +43,6 @@ namespace PaintF
         {
             try
             {
-                OpenFileDialog openFileDialog1 = new OpenFileDialog();
                 XmlDocument xmlDocument = new XmlDocument();
                 xmlDocument.Load("prevSessionConfig.xml");
                 XmlElement xmlRoot = xmlDocument.DocumentElement;

@@ -11,8 +11,6 @@ namespace PaintF
 {
     public class Serializer
     {
-        string fileName = "figures.txt";
-
         public void Serialize(List<Figure> list)
         {
             string data = JsonConvert.SerializeObject(list, new JsonSerializerSettings()
@@ -22,13 +20,27 @@ namespace PaintF
             string readyString = Convert.ToBase64String(Encoding.Default.GetBytes(data));           
             try
             {
-                var fileStream = new FileStream(fileName, FileMode.Create);
-                fileStream.Write(Encoding.Default.GetBytes(readyString), 0, readyString.Length);
-                string message = "Аминь";
-                string caption = "bless and save";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                MessageBox.Show(message, caption, buttons);
-                fileStream.Close();
+                SaveFileDialog saveFileDialog = new SaveFileDialog()
+                {
+                    Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
+                    FilterIndex = 2,
+                    RestoreDirectory = true
+                };
+
+                Stream fileWriter;
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if ((fileWriter = saveFileDialog.OpenFile()) != null)
+                    {
+                        fileWriter.Write(Encoding.Default.GetBytes(readyString), 0, readyString.Length);
+                        string message = "Аминь";
+                        string caption = "bless and save";
+                        MessageBoxButtons buttons = MessageBoxButtons.OK;
+                        MessageBox.Show(message, caption, buttons);
+                        fileWriter.Close();
+                    }
+                }
+
             }
             catch(Exception ex)
             {
@@ -41,19 +53,38 @@ namespace PaintF
         public List<Figure> Deserialize()
         {
             List<Figure> figures = new List<Figure> { };
-            if (File.Exists(fileName))
+            OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                var fileStream = new StreamReader(File.Open(fileName, FileMode.Open));
+                Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
+            Stream fileReader = null;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
                 try
                 {
-                    string data = fileStream.ReadToEnd();
-                    byte[] result = Convert.FromBase64String(data);
-                    figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result),
-                        new JsonSerializerSettings
+                    if ((fileReader = openFileDialog.OpenFile()) != null)
+                    {
+                        using (fileReader)
                         {
-                            TypeNameHandling = TypeNameHandling.All
-                        });
-                    fileStream.Close();
+                            string data = "";
+                            byte[] temp = new byte[1024];
+                            int size;
+                            while ((size = fileReader.Read(temp, 0, temp.Length)) > 0)
+                            {
+                                Array.Resize(ref temp, size);
+                                data += Encoding.Default.GetString(temp);
+                            }
+                            byte[] result = Convert.FromBase64String(data);
+                            figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result),
+                                new JsonSerializerSettings
+                                {
+                                    TypeNameHandling = TypeNameHandling.All
+                                });
+                            fileReader.Close();
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -63,17 +94,15 @@ namespace PaintF
                 }
                 finally
                 {
-                    if (fileStream != null)
-                        ((IDisposable)fileStream).Dispose();
+                    if (fileReader != null)
+                        ((IDisposable)fileReader).Dispose();
                 }
                 return figures;
             }
             else
             {
-                MessageBox.Show("отсутствует файл для десериализации(", "Error", MessageBoxButtons.OK);
-                return figures;
+                return Paint.FigureList.Figures;
             }
-
         }
     }
 }

@@ -10,7 +10,7 @@ namespace PaintF
 {
     public partial class Paint : Form
     {
-        FigureList FigureList = new FigureList();
+        public static FigureList FigureList = new FigureList();
 
         FigureCreatorList FigureCreatorList = new FigureCreatorList();
 
@@ -232,6 +232,7 @@ namespace PaintF
             if (FigureList.Figures.Count != 0)
             {
                 serializer.Serialize(FigureList.Figures);
+                ConfigKeeper.SaveXml();
             }
             else
             {
@@ -244,10 +245,10 @@ namespace PaintF
 
         private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ClearSurface();
             var deserializer = new Serializer();
             FigureList.Figures = deserializer.Deserialize();
             Graphics g = pictureBox1.CreateGraphics();
+            ConfigKeeper.LoadXml();
             RepaintFigureList(g);
         }
 
