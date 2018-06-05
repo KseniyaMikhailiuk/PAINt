@@ -226,7 +226,7 @@ namespace PaintF
             }
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var serializer = new Serializer(); 
             if (FigureList.Figures.Count != 0)
@@ -242,7 +242,7 @@ namespace PaintF
             }
         }
 
-        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearSurface();
             var deserializer = new Serializer();
@@ -259,17 +259,17 @@ namespace PaintF
         }
 
 
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearSurface();
         }
 
-        private void highlightToolStripMenuItem_Click(object sender, EventArgs e)
+        private void HighlightToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IsHighlighterOn = true;
         }
 
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        private void PictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             if (IsPastButtonPressed)
             {
@@ -285,7 +285,7 @@ namespace PaintF
             }
         }
 
-        private void trackBar1_Scroll(object sender, EventArgs e)
+        private void TrackBar1_Scroll(object sender, EventArgs e)
         {
             PenWidth = trackBar1.Value;
             Pen = new Pen(PenColor, PenWidth);

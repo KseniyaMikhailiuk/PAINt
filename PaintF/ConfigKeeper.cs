@@ -57,7 +57,6 @@ namespace PaintF
                 {
                     foreach(XmlNode xnodechild in xnode)
                     {
-                        // получаем атрибут name
                         if (xnodechild.Name == "penWidth")
                         {
                             if (xnodechild.FirstChild != null)
