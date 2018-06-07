@@ -17,6 +17,7 @@ namespace PaintF
         FigureCreator FigureCreator;
 
         List<Figure> UserFigure = new List<Figure>();
+        List<Figure> ConstUserFigure = new List<Figure>();
 
         Figure Figure;
 
@@ -31,7 +32,8 @@ namespace PaintF
         Highlighter Highlighter = new Highlighter();
 
         public bool IsPastButtonPressed = false;
-        public bool IsItFirstPast = false;
+        public bool IsFirstPast = false;
+        public bool IsFirstUserFigure = false;
         public bool isClicked = false;
         public bool isUserFigureSelected = false;
         public bool IsHighlighterOn = false;
@@ -154,7 +156,7 @@ namespace PaintF
             if ((Highlighter.SelectedFigure != null) && (IsHighlighterOn))
             {
                 CopiedFigure = (Figure)Highlighter.SelectedFigure.Clone();
-                IsItFirstPast = true;
+                IsFirstPast = true;
             }
         }
 
@@ -162,7 +164,7 @@ namespace PaintF
         {
             if ((IsHighlighterOn) && (CopiedFigure != null))
             {
-                if (!IsItFirstPast)
+                if (!IsFirstPast)
                 {
                     CopiedFigure = (Figure)CopiedFigure.Clone();
                 }
@@ -183,6 +185,7 @@ namespace PaintF
         internal void MenuItemUserFigureClickHandler(object sender, EventArgs e)
         {
             UserFigure.Clear();
+            ConstUserFigure.Clear();
             IsHighlighterOn = false;
             isUserFigureSelected = true;
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
@@ -191,7 +194,9 @@ namespace PaintF
             {
                 Figure tempFigure = (Figure)figure.Clone();
                 UserFigure.Add(tempFigure);
+                ConstUserFigure.Add(tempFigure);
             }
+            IsFirstUserFigure = true;
         }
 
         private void MenuColorClickHandler(object sender, EventArgs e)
@@ -213,6 +218,15 @@ namespace PaintF
             {
                 if (isUserFigureSelected && e.Button == MouseButtons.Left)
                 {
+                    if (!IsFirstUserFigure)
+                    {
+                        UserFigure.Clear();
+                        foreach (var figure in ConstUserFigure)
+                        {
+                            Figure tempFigure = (Figure)figure.Clone();
+                            UserFigure.Add(tempFigure);
+                        }
+                    }
                     isClicked = true;
                 }
                 else
@@ -244,6 +258,7 @@ namespace PaintF
                             FigureList.Figures.Add(figure);
                         }
                     }
+                    IsFirstUserFigure = false;
                 }
                 else
                 {
@@ -380,7 +395,7 @@ namespace PaintF
                 Graphics g = pictureBox1.CreateGraphics();
                 RepaintFigureList(g);
                 IsPastButtonPressed = false;
-                IsItFirstPast = false;
+                IsFirstPast = false;
             }
         }
 
