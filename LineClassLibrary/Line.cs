@@ -15,7 +15,11 @@ namespace LineClassLibrary
         public override bool IsPointIn(Point point)
         {
             float k = (float)(FinishPoint.Y - StartPoint.Y) / (FinishPoint.X - StartPoint.X);
-            float b = -(StartPoint.X * FinishPoint.Y - FinishPoint.X * StartPoint.Y) / (FinishPoint.X - StartPoint.X);
+            float b = 1;
+            if (FinishPoint.X - StartPoint.X != 0)
+            {
+                b = -(StartPoint.X * FinishPoint.Y - FinishPoint.X * StartPoint.Y) / (FinishPoint.X - StartPoint.X);
+            }
             int start = StartPoint.X;
             int finish = FinishPoint.X;
             if (StartPoint.X > FinishPoint.X)

@@ -52,7 +52,6 @@ namespace PaintF
 
         public List<Figure> Deserialize()
         {
-            List<Figure> figures = new List<Figure> { };
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
@@ -62,45 +61,44 @@ namespace PaintF
             Stream fileReader = null;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                try
+                if ((fileReader = openFileDialog.OpenFile()) != null)
                 {
-                    if ((fileReader = openFileDialog.OpenFile()) != null)
+                    return GetFigureListFromFile(fileReader);
+                }
+            }
+            return Paint.FigureList.Figures;
+        }
+
+        public static List<Figure> GetFigureListFromFile(Stream fileReader)
+        {
+            try
+            {
+                List<Figure> figures = new List<Figure> { };
+                using (fileReader)
+                {
+                    string data = "";
+                    byte[] temp = new byte[1024];
+                    int size;
+                    while ((size = fileReader.Read(temp, 0, temp.Length)) > 0)
                     {
-                        using (fileReader)
-                        {
-                            string data = "";
-                            byte[] temp = new byte[1024];
-                            int size;
-                            while ((size = fileReader.Read(temp, 0, temp.Length)) > 0)
-                            {
-                                Array.Resize(ref temp, size);
-                                data += Encoding.Default.GetString(temp);
-                            }
-                            byte[] result = Convert.FromBase64String(data);
-                            figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result),
-                                new JsonSerializerSettings
-                                {
-                                    TypeNameHandling = TypeNameHandling.All
-                                });
-                            fileReader.Close();
-                        }
+                        Array.Resize(ref temp, size);
+                        data += Encoding.Default.GetString(temp);
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBoxButtons button = MessageBoxButtons.OK;
-                    string caption = "Error";
-                    MessageBox.Show(ex.Message, caption, button);
-                }
-                finally
-                {
-                    if (fileReader != null)
-                        ((IDisposable)fileReader).Dispose();
+                    byte[] result = Convert.FromBase64String(data);
+                    figures = JsonConvert.DeserializeObject<List<Figure>>(Encoding.Default.GetString(result),
+                        new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.All
+                        });
+                    fileReader.Close();
                 }
                 return figures;
             }
-            else
+            catch(Exception ex)
             {
+                MessageBoxButtons button = MessageBoxButtons.OK;
+                string caption = "Error";
+                MessageBox.Show(ex.Message, caption, button);
                 return Paint.FigureList.Figures;
             }
         }

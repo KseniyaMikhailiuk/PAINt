@@ -44,6 +44,11 @@ namespace AbstractClassLibrary
         public Point StartPoint { get; set; }
         [DataMember]
         public Point FinishPoint { get; set; }
+
+        [DataMember]
+        public Point FixedStartPoint { get; set; }
+        [DataMember]
+        public Point FixedFinishPoint { get; set; }
         public abstract void Draw(Graphics g, Pen pen, Point StartPoint, Point FinishPoint);
     }
 }
