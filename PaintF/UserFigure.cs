@@ -32,25 +32,24 @@ namespace PaintF
                 if (figure != null)
                 {
                     float widthDif = (FinishPoint.X - StartPoint.X) / (float)FieldWidth;
-                    float heightDif = (FinishPoint.Y - StartPoint.Y) / (float)FieldHeight;
-                    figure.StartPoint = CountStartPoint(figure, widthDif, heightDif);
-                    figure.FinishPoint = CountFinishPoint(figure, widthDif, heightDif);
+                    figure.StartPoint = CountStartPoint(figure, widthDif);
+                    figure.FinishPoint = CountFinishPoint(figure, widthDif);
                     figure.Draw(g, figure.Pen, figure.StartPoint, figure.FinishPoint);
                 }
             }
         }
 
-        public Point CountStartPoint(Figure figure, float widthDif, float heightDif)
+        public Point CountStartPoint(Figure figure, float widthDif)
         {
             int tempStartX = (int)(StartPoint.X + figure.FixedStartPoint.X * widthDif);
-            int tempStartY = (int)(StartPoint.Y + figure.FixedStartPoint.Y * heightDif);
+            int tempStartY = (int)(StartPoint.Y + figure.FixedStartPoint.Y * widthDif);
             return new Point(tempStartX, tempStartY);
         }
 
-        public Point CountFinishPoint(Figure figure, float widthDif, float heightDif)
+        public Point CountFinishPoint(Figure figure, float widthDif)
         {
             int tempFinishX = (int)(StartPoint.X + figure.FixedFinishPoint.X * widthDif);
-            int tempFinishY = (int)(StartPoint.Y + figure.FixedFinishPoint.Y * heightDif);
+            int tempFinishY = (int)(StartPoint.Y + figure.FixedFinishPoint.Y * widthDif);
             return new Point(tempFinishX, tempFinishY);
         }
 

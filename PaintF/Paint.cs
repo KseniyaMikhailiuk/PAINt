@@ -188,7 +188,6 @@ namespace PaintF
             isUserFigureSelected = true;
             ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
             UserFigure tempUserFigure = (UserFigure)clickedItem.Tag;
-            Figure = (UserFigure)tempUserFigure.Clone();
             ConstUserFigure = (UserFigure)tempUserFigure.Clone();
             IsFirstUserFigure = true;
         }
@@ -210,7 +209,7 @@ namespace PaintF
             }
             else
             {
-                if (isUserFigureSelected && e.Button == MouseButtons.Left && !IsFirstUserFigure)
+                if (isUserFigureSelected && e.Button == MouseButtons.Left)
                 {
                     Figure = (UserFigure)ConstUserFigure.Clone();
                     isClicked = true;
