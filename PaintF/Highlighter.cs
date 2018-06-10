@@ -10,7 +10,7 @@ namespace PaintF
         public Figure HighlightObject;
         public Figure SelectedFigure { get; set; }
 
-        public void Start(Point point, List<Figure> list, PictureBox pictureBox/*, bool isHighlighted*/)
+        public void Start(Point point, List<Figure> list, PictureBox pictureBox)
         {
             SelectedFigure = RecognizeFigure(point, list);
             if (SelectedFigure != null)

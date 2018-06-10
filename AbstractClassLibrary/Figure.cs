@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.Serialization;
 using System;
+using System.Collections.Generic;
 
 namespace AbstractClassLibrary
 {
@@ -39,6 +40,10 @@ namespace AbstractClassLibrary
 
         public abstract object Clone();
 
+        public virtual void Add(List<Figure> list)
+        {
+            list.Add(this);
+        }
 
         [DataMember]
         public Point StartPoint { get; set; }
